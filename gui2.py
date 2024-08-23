@@ -60,7 +60,7 @@ def browse_files():
 
 # Set up the main application window
 root = tk.Tk()
-root.title("Participant File Checker v2")
+root.title("Participant File Checker v2.1")
 
 #Styles
 blue_btn=ttk.Style().configure("blue.btn",foreground="black",background = "#0a8fab")
