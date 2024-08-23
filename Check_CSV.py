@@ -1,5 +1,6 @@
 import pandas as pd
 
+from DataIntegrityCalc import DataIntegrityList
 from BlankCellsCalc import BlankCellsTable
 from duplicatedCellsCalc import DuplicatedCellsTable
 from EmailValidationCalc import EmailValidationTable
@@ -13,6 +14,12 @@ def check_csv(file_path, domains_accepted,unsupported_chars, checks):
     blankIndex =['']*len(df)
     df.index=blankIndex
     summary = {}
+
+    # data integrity check
+    if 'data_integrity' in checks:
+        required_columns = ['Unique Identifier', 'First Name', 'Last Name', 'Email', 'ManagerID']
+
+        dataIntegrityResult = DataIntegrityList(df, required_columns)
 
     if 'blank_cells' in checks:
         required_columns = ['Unique Identifier', 'First Name', 'Last Name', 'Email', 'ManagerID']

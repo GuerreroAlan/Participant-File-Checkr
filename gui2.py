@@ -22,13 +22,17 @@ def run_checks():
     #Get unsupported chars
     user_unsupported_chars = user_entry_unsupported_chars.get()#.split(',')
     unsopportedChars = ''.join(str(x) for x in user_unsupported_chars)
-    print(unsopportedChars)
+    #print(unsopportedChars)
     
     checks = []
+    checks.append('data_integrity')
+
     if var_blank_cells.get():
         checks.append('blank_cells')
+
     if var_duplicate_ids.get():
         checks.append('duplicate_identifiers')
+
     if var_invalid_emails.get():
         checks.append('email_errors')
         
