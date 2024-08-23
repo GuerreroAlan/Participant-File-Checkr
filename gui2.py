@@ -101,7 +101,7 @@ def UnsupportedCharsCheck():
         user_entry_unsupported_chars.delete(0, tk.END)
     else:
         user_entry_unsupported_chars.delete(0, tk.END)
-        user_entry_unsupported_chars.insert(0, "Provide valid Unsupported Characters...")
+        user_entry_unsupported_chars.insert(0, "Provide Unsupported Characters...")
         user_entry_unsupported_chars.configure(foreground= "gray", state='disabled')
 
 # Check options
@@ -132,7 +132,7 @@ unsupported_chars_check = tk.Checkbutton(checks_frame, text="Check for unsupport
 unsupported_chars_check.grid(row=4, column=0, sticky=tk.W)
 #Unsupported characters input
 user_entry_unsupported_chars = tk.Entry(checks_frame, width=40)
-user_entry_unsupported_chars.insert(0, "Provide valid Unsupported Characters...")
+user_entry_unsupported_chars.insert(0, "Provide Unsupported Characters...")
 user_entry_unsupported_chars.grid(row=4, column=1, padx=5, pady=5, columnspan=3)
 user_entry_unsupported_chars.configure(foreground= "gray", state='disabled')
 
