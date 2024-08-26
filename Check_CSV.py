@@ -17,12 +17,12 @@ def check_csv(file_path, domains_accepted,unsupported_chars, checks):
 
     # data integrity check
     if 'data_integrity' in checks:
-        required_columns = ['Unique Identifier', 'First Name', 'Last Name', 'Email', 'ManagerID']
+        required_columns = ['Unique Identifier', 'First Name', 'Last Name', 'Email']
 
         dataIntegrityResult = DataIntegrityList(df, required_columns)
 
     if 'blank_cells' in checks:
-        required_columns = ['Unique Identifier', 'First Name', 'Last Name', 'Email', 'ManagerID']
+        required_columns = ['Unique Identifier', 'First Name', 'Last Name', 'Email']
 
         blankCellsResult = BlankCellsTable(df, required_columns)
 
@@ -41,7 +41,7 @@ def check_csv(file_path, domains_accepted,unsupported_chars, checks):
         summary['email_errors'] = validEmailsResult
 
     if 'unsupported_char_errors' in checks:
-        required_columns = ['Unique Identifier', 'First Name', 'Last Name', 'ManagerID']
+        required_columns = ['Unique Identifier', 'First Name', 'Last Name']
 
         unsopportedCharsResult = UnsopportedCharsTable(df, unsupported_chars, required_columns)
 
