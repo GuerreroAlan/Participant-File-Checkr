@@ -117,10 +117,10 @@ checks_frame.grid(row=3, column=0, columnspan=5, padx=15, pady=15, sticky=tk.W)
 blank_cells_check = tk.Checkbutton(checks_frame, text="Check for blank cells", variable=var_blank_cells)
 blank_cells_check.grid(row=1, column=0, sticky=tk.W)
 
-duplicate_ids_check = tk.Checkbutton(checks_frame, text="Check for duplicate unique identifiers", variable=var_duplicate_ids)
+duplicate_ids_check = tk.Checkbutton(checks_frame, text="Check for duplicated Unique Identifiers and Emails ", variable=var_duplicate_ids)
 duplicate_ids_check.grid(row=2, column=0, sticky=tk.W)
 
-invalid_emails_check = tk.Checkbutton(checks_frame, text="Check for invalid and duplicate emails", variable=var_invalid_emails, command=EmailCheck)
+invalid_emails_check = tk.Checkbutton(checks_frame, text="Check for invalid emails", variable=var_invalid_emails, command=EmailCheck)
 invalid_emails_check.grid(row=3, column=0, sticky=tk.W)
 # Email domains input
 domains_entry = tk.Entry(checks_frame, width=40)

@@ -35,13 +35,13 @@ def print_summary(summary, file_name, word_unsupported_characters_insert, checks
     with open(thisReportPath + "/ReadMe.txt", "w") as output:
         output.write('How to read the report: \n')
         if 'blank_cells' in checks:
-            output.write("For blank cells, blank cells can be present across following columns: 'First Name', 'Last Name', 'Email', 'Unique Identifier', 'Manager_ID'.\n  There can be extra blank cells causing issues. \n")
+            output.write("For blank cells, blank cells can be present across following columns: 'First Name', 'Last Name', 'Email', 'Unique Identifier'.\n  There can be extra blank cells causing issues. \n")
         if 'duplicate_identifiers' in checks:
-            output.write('For duplicated Unique Identifiers, the program will return one of the values that are duplicated, you will have to manually update and fix the ones that are wrong. \n')
+            output.write('For duplicated Unique Identifiers and Emails, the program will return one of the values that are duplicated, you will have to manually update and fix the ones that are wrong. \n')
         if 'email_errors' in checks:
             output.write("For Email Errors Summary check, issues can be related with:\n   +Unsupported format of emails address\n   +Unsupported characters in email address\n   +Unsupported email domains\n   +Unsupported characters before '@' \n")
         if 'unsupported_char_errors' in checks:
-            output.write(f'For unsupported characters, the program search for the following characters set by the user in the GUI in columns named:First Name, Last Name,Email,Unique Identifier, Manager_ID.\nUser unsupported characters:"{word_unsupported_characters_insert} \n"')
+            output.write(f'For unsupported characters, the program search for the following characters set by the user in the GUI in columns named:First Name, Last Name, Unique Identifier.\nUser unsupported characters:"{word_unsupported_characters_insert} \n"')
         if 'excessive_length_errors' in checks:
             output.write('For the excessive lengths we search for values higher than 50 characters in columns First Name and Last Name, and values higher that 100 characters in columns Email and Unique Identifiers')
     
