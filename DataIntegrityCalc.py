@@ -11,10 +11,10 @@ def DataIntegrityList(df, required_columns):
     missing_ColumnsDF = pd.DataFrame(list(missing_Columns))
 
     # renaming the "Missing Required Columns" column
-    missing_ColumnsDF.rename(columns={0: 'Missing Required Columns'}, inplace=True)
+    missing_ColumnsDF.rename(columns={0: 'Missing Columns'}, inplace=True)
 
     if len(missing_ColumnsDF) > 0:
-        messagebox.showerror("Error", "Missing Required Columns: \n" + '\n'.join(missing_Columns) + '\n\nBefore continue, please add missing columns \nto the selected file.')
+        messagebox.showerror("Error", "Missing Columns: \n" + '\n'.join(missing_Columns))
         sys.exit()
 
     return missing_ColumnsDF
