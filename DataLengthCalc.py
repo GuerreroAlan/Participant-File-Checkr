@@ -1,7 +1,6 @@
 import pandas as pd
 
-def ExcessiveLength(df):
-    required_columns = df.columns.values
+def ExcessiveLength(df, required_columns):
     LengthExceedTable = {}
 
     for colName in required_columns:
