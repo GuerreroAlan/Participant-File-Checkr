@@ -4,28 +4,30 @@ from DataIntegrityCalc import DataIntegrityList
 from BlankCellsCalc import BlankCellsTable
 from duplicatedCellsCalc import DuplicatedCellsTable
 from EmailValidationCalc import EmailValidationTable
-from SpecialCharsCalc import UnsopportedCharsTable
+from SpecialCharsCalc import UnsupportedCharsTable
 from DataLengthCalc import ExcessiveLength
 
 # Function to check/read CSV
-def check_csv(file_path, domains_accepted,unsupported_chars, checks):
+def check_csv(file_path, optionalColumns, domains_accepted,unsupported_chars, checks):
     df = pd.read_csv(file_path, dtype='str')
     df.describe()
     blankIndex =['']*len(df)
     df.index=blankIndex
     summary = {}
+    dfColumns = df.columns.values
 
     # data integrity check
     if 'data_integrity' in checks:
         required_columns = ['Unique Identifier', 'First Name', 'Last Name', 'Email']
-
+        if optionalColumns[0]:
+            required_columns.extend(optionalColumns)
         dataIntegrityResult = DataIntegrityList(df, required_columns)
 
     if 'blank_cells' in checks:
         required_columns = ['Unique Identifier', 'First Name', 'Last Name', 'Email']
-
+        if optionalColumns[0]:
+            required_columns.extend(optionalColumns)
         blankCellsResult = BlankCellsTable(df, required_columns)
-
         summary['blank_cells'] = blankCellsResult
 
     if 'duplicate_identifiers' in checks:
@@ -41,14 +43,15 @@ def check_csv(file_path, domains_accepted,unsupported_chars, checks):
         summary['email_errors'] = validEmailsResult
 
     if 'unsupported_char_errors' in checks:
-        required_columns = ['Unique Identifier', 'First Name', 'Last Name']
+        required_columns = dfColumns
 
-        unsopportedCharsResult = UnsopportedCharsTable(df, unsupported_chars, required_columns)
+        unsupportedCharsResult = UnsupportedCharsTable(df, unsupported_chars, required_columns)
 
-        summary['unsopported_char_errors'] = unsopportedCharsResult
+        summary['unsopported_char_errors'] = unsupportedCharsResult
 
     if 'excessive_length_errors' in checks:
-        excessiveLengthResult = ExcessiveLength(df)
+        required_columns = dfColumns
+        excessiveLengthResult = ExcessiveLength(df, required_columns)
 
         summary['excessive_length_errors'] = excessiveLengthResult
 
