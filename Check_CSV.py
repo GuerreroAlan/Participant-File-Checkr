@@ -19,7 +19,7 @@ def check_csv(file_path, optionalColumns, domains_accepted,unsupported_chars, ch
     # data integrity check
     if 'data_integrity' in checks:
         required_columns = ['Unique Identifier', 'First Name', 'Last Name', 'Email']
-        if optionalColumns[0]:
+        if optionalColumns[0] and 'blank_cells' in checks:
             required_columns.extend(optionalColumns)
         dataIntegrityResult = DataIntegrityList(df, required_columns)
 
@@ -47,7 +47,7 @@ def check_csv(file_path, optionalColumns, domains_accepted,unsupported_chars, ch
 
         unsupportedCharsResult = UnsupportedCharsTable(df, unsupported_chars, required_columns)
 
-        summary['unsopported_char_errors'] = unsupportedCharsResult
+        summary['unsupported_char_errors'] = unsupportedCharsResult
 
     if 'excessive_length_errors' in checks:
         required_columns = dfColumns
