@@ -29,8 +29,8 @@ def run_checks():
     BlankCheck_Columns = ', '.join(required_columns_Report)
 
     #Get unsupported chars
-    #user_unsupported_chars = user_entry_unsupported_chars.get()#.split(',')
-    unsupportedChars = '[]{}&|;$%()+*,`'
+    unsupportedChars = unsupported_Chars_entry.get()#.split(',')
+    #unsupportedChars = '[]{}&|;$%()+*,`'
     #print(unsopportedChars)
     
     checks = []
@@ -58,6 +58,10 @@ def run_checks():
     if 'email_errors' in checks and not domainsraw:
         messagebox.showerror("Error", "Please provide the domains accepted to validate the emails.")
         return
+    
+    if 'unsupported_char_errors' in checks and not unsupportedChars:
+        messagebox.showerror("Error", "Please provide unsupported characters to be reviewed.")
+        return
 
     summary = check_csv(file_path, optionalColumns, domainsAccepted, unsupportedChars, checks)
     print_summary(summary, file_path, unsupportedChars, checks, BlankCheck_Columns)
@@ -83,7 +87,7 @@ browse_button = tk.Button(root, text="Browse",command=browse_files)
 browse_button.grid(row=0, column=2, padx=5, pady=5)
 
 # function to enable/disable text boxes
-# Domains
+# Blank
 def BlankCheck():
     BlankCheckFlag = False
     if var_blank_cells.get():
@@ -107,6 +111,16 @@ def EmailCheck():
         domains_entry.delete(0,tk.END)
         domains_entry.insert(0, "Provide valid Email Domains...")
         domains_entry.configure(foreground= "gray", state='disabled')
+
+# Unsupported
+def UnsupportedCheck():
+    UnsupportedCheckFlag = False
+    if var_unsupported_chars.get():
+        UnsupportedCheckFlag = True
+    if UnsupportedCheckFlag:
+        unsupported_Chars_entry.configure(state='normal', foreground="black")
+    else:
+        unsupported_Chars_entry.configure(foreground= "gray", state='disabled')
 
 # Check options
 var_blank_cells = tk.BooleanVar()
@@ -137,9 +151,15 @@ domains_entry.insert(0, "Provide valid Email Domains...")
 domains_entry.grid(row=3, column=1, padx=5, pady=5, columnspan=3)
 domains_entry.configure(foreground= "gray", state='disabled')
 
-unsupported_chars_check = tk.Checkbutton(checks_frame, text="Check for unsupported characters", variable=var_unsupported_chars)
+unsupported_chars_check = tk.Checkbutton(checks_frame, text="Check for unsupported characters", variable=var_unsupported_chars, command=UnsupportedCheck)
 unsupported_chars_check.grid(row=4, column=0, sticky=tk.W)
+# unsupported characters entry
+unsupported_Chars_entry = tk.Entry(checks_frame, width=40)
+unsupported_Chars_entry.insert(0, "[]{}&|;$%()+*,`")
+unsupported_Chars_entry.grid(row=4, column=1, padx=5, pady=5, columnspan=3)
+unsupported_Chars_entry.configure(foreground= "gray", state='disabled')
 
+# excessive length
 excessive_lengths_check = tk.Checkbutton(checks_frame, text="Check for excessive lengths", variable=var_excessive_lengths)
 excessive_lengths_check.grid(row=5, column=0, sticky=tk.W)
 
@@ -156,7 +176,7 @@ unsupported_chars_list_2=tk.Label(unsupported_chars_list_frame, text="3. Optiona
 unsupported_chars_list_2.grid(row=3, column=1, padx=5, pady=5, sticky=tk.W)
 unsupported_chars_list_2=tk.Label(unsupported_chars_list_frame, text="4. Provide valid Email Domains, (comma-separated, without '@').")
 unsupported_chars_list_2.grid(row=4, column=1, padx=5, pady=5, sticky=tk.W)
-unsupported_chars_list_2=tk.Label(unsupported_chars_list_frame, text='5. The following unsupported characters will be checked: "[]{}&|;$%()+*,`"')
+unsupported_chars_list_2=tk.Label(unsupported_chars_list_frame, text='5. Provide unsupported characters that will be checked, by default: []{}&|;$%()+*,`')
 unsupported_chars_list_2.grid(row=5, column=1, padx=5, pady=5, sticky=tk.W)
 unsupported_chars_list_4=tk.Label(unsupported_chars_list_frame, text='6.Click "Run Check!"')
 unsupported_chars_list_4.grid(row=6, column=1, padx=5, pady=5, sticky=tk.W)
