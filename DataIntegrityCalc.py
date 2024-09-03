@@ -15,6 +15,6 @@ def DataIntegrityList(df, required_columns):
 
     if len(missing_ColumnsDF) > 0:
         messagebox.showerror("Error", "Missing Columns: \n" + '\n'.join(missing_Columns))
-        sys.exit()
+        #sys.exit()
 
     return missing_ColumnsDF
