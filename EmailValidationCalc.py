@@ -14,7 +14,7 @@ def EmailValidationTable(df, domains_accepted):
 
     notEmptyRows = []
     notEmptyRows = df[(df['EmailUsername'].notna()) & (df['EmailUsername'].notnull())]
-    specialCharsEmail = notEmptyRows[notEmptyRows['EmailUsername'].str.contains(r'[^0-9a-zA-Z._-]')]
+    specialCharsEmail = notEmptyRows[notEmptyRows['EmailUsername'].str.contains(r'[^0-9a-zA-Z._\-%\+\?:\']')]
 
     if (len(notValidDomainEmails) == 0):
         notValidDomainEmails = pd.DataFrame(columns=['There are no invalid domains in the list of Emails.'])
