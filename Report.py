@@ -73,7 +73,7 @@ def print_summary(summary, file_name, word_unsupported_characters_insert, checks
     # Unsupported Characters
     if 'unsupported_char_errors' in checks:
         # creating a csv file for duplicated identifiers
-        for colName, info in summary['unsopported_char_errors'].items():
+        for colName, info in summary['unsupported_char_errors'].items():
             # converting the info into a dataframe
             newCol = colName + ':'
             df = pd.DataFrame(info)
