@@ -5,7 +5,7 @@ import os
 
 
 # Function to print error summaries
-def print_summary(summary, file_name, word_unsupported_characters_insert, checks):
+def print_summary(summary, file_name, word_unsupported_characters_insert, checks, BlankCheckColumns):
 
     # obtainin the timestamp to add it to the folder and report names
     today = datetime.datetime.today()
@@ -35,15 +35,15 @@ def print_summary(summary, file_name, word_unsupported_characters_insert, checks
     with open(thisReportPath + "/ReadMe.txt", "w") as output:
         output.write('How to read the report: \n')
         if 'blank_cells' in checks:
-            output.write("For blank cells, blank cells can be present across following columns: 'First Name', 'Last Name', 'Email', 'Unique Identifier', 'Manager_ID'.\n  There can be extra blank cells causing issues. \n")
+            output.write(f'- For blank cells, check in the following columns: "{BlankCheckColumns}".\n    + There can be extra blank cells causing issues. \n')
         if 'duplicate_identifiers' in checks:
-            output.write('For duplicated Unique Identifiers, the program will return one of the values that are duplicated, you will have to manually update and fix the ones that are wrong. \n')
+            output.write('- For duplicated values, the program will return the values that are duplicated in the columns "Unique Identifier and Email". \n    + You will have to manually update and fix the ones that are wrong. \n')
         if 'email_errors' in checks:
-            output.write("For Email Errors Summary check, issues can be related with:\n   +Unsupported format of emails address\n   +Unsupported characters in email address\n   +Unsupported email domains\n   +Unsupported characters before '@' \n")
+            output.write("- For Email validation, the program will return issues related with:\n   + Unsupported Email Domains.\n   + Unsupported characters in the username. \n")
         if 'unsupported_char_errors' in checks:
-            output.write(f'For unsupported characters, the program search for the following characters set by the user in the GUI in columns named:First Name, Last Name,Email,Unique Identifier, Manager_ID.\nUser unsupported characters:"{word_unsupported_characters_insert} \n"')
+            output.write(f'- For unsupported characters, the program search for the following characters:"{word_unsupported_characters_insert}" within all the columns in the file.\n')
         if 'excessive_length_errors' in checks:
-            output.write('For the excessive lengths we search for values higher than 50 characters in columns First Name and Last Name, and values higher that 100 characters in columns Email and Unique Identifiers')
+            output.write('- For the excessive lengths we search for values:\n    + higher than 50 characters in columns "First Name and Last Name".\n    + higher than 100 characters in columns "Email and Unique Identifier". \n    + higher than 1000 in any other column.')
     
     # exporting the tables to the report docs
     # Blank cells
@@ -55,10 +55,9 @@ def print_summary(summary, file_name, word_unsupported_characters_insert, checks
         # creating a csv file for duplicated identifiers
         for colName, info in summary['duplicated_cells'].items():
             # converting the info into a dataframe
-            titleList = [[colName+':', '']]
-            title = pd.DataFrame(titleList)
+            newCol = colName + ':'
             df = pd.DataFrame(info)
-            title.to_csv(thisReportPath + "/DuplicatedIdentifiersReport.csv", mode='a', header=False, index=False)
+            df.insert(loc=0,column=newCol, value=newCol)
             df.to_csv(thisReportPath + "/DuplicatedIdentifiersReport.csv", mode='a', index=False)
 
     # Email Validation
@@ -66,21 +65,19 @@ def print_summary(summary, file_name, word_unsupported_characters_insert, checks
         # creating a csv file for duplicated identifiers
         for colName, info in summary['email_errors'].items():
             # converting the info into a dataframe
-            titleList = [[colName+':', '']]
-            title = pd.DataFrame(titleList)
+            newCol = colName + ':'
             df = pd.DataFrame(info)
-            title.to_csv(thisReportPath + "/EmailValidationReport.csv", mode='a', header=False, index=False)
+            df.insert(loc=0,column=newCol, value=newCol)
             df.to_csv(thisReportPath + "/EmailValidationReport.csv", mode='a', index=False)
 
     # Unsupported Characters
     if 'unsupported_char_errors' in checks:
         # creating a csv file for duplicated identifiers
-        for colName, info in summary['unsopported_char_errors'].items():
+        for colName, info in summary['unsupported_char_errors'].items():
             # converting the info into a dataframe
-            titleList = [[colName+':', '']]
-            title = pd.DataFrame(titleList)
+            newCol = colName + ':'
             df = pd.DataFrame(info)
-            title.to_csv(thisReportPath + "/UnsupportedCharReport.csv", mode='a', header=False, index=False)
+            df.insert(loc=0,column=newCol, value=newCol)
             df.to_csv(thisReportPath + "/UnsupportedCharReport.csv", mode='a', index=False)
 
     # Excessive Length
@@ -88,10 +85,9 @@ def print_summary(summary, file_name, word_unsupported_characters_insert, checks
         # creating a csv file for duplicated identifiers
         for colName, info in summary['excessive_length_errors'].items():
             # converting the info into a dataframe
-            titleList = [[colName+':', '']]
-            title = pd.DataFrame(titleList)
+            newCol = colName + ':'
             df = pd.DataFrame(info)
-            title.to_csv(thisReportPath + "/ExcessiveLengthReport.csv", mode='a', header=False, index=False)
+            df.insert(loc=0,column=newCol, value=newCol)
             df.to_csv(thisReportPath + "/ExcessiveLengthReport.csv", mode='a', index=False)
 
     messagebox.showinfo("Report Generated", "Report Generated")
